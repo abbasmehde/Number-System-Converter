@@ -1,4 +1,4 @@
-# The Number Conversion Toolkit
+# Number Conversion Toolkit
 
 The Number Conversion Toolkit is a versatile utility for performing various numeric conversions effortlessly. This toolkit provides functionalities for converting numbers between different bases, including binary, decimal, octal, and hexadecimal.
 
