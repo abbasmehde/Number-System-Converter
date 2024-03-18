@@ -1,1 +1,370 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 
+void show() {
+    printf("\n\n---------- Your conversion is ----------\n\n");
+}
+
+void wellcome() {
+    printf("\n----------------------------------------");
+    printf("\nWell come to Number conversion system");
+    printf("\n----------------------------------------\n\n\n");
+}
+
+void screenCleaner() {
+    system("cls");  // clears the output screen
+    fflush(stdin);  // clears the input buffer
+}
+
+void thanks() {
+    screenCleaner();
+    printf("-------------------------------------------\n");
+    printf(" >>> Creator: ABBAS MEHDI <<< \n");
+    printf("-------------------------------------------\n\n");
+    printf("> GitHub: https://github.com/abbasmehde \n");
+    printf("> LinkedIn: https://www.linkedin.com/in/abbas-mehdi-512017278/ \n\n");
+    exit(0);  // exit() function to close the program safely
+}
+
+void tryagain(int num) {
+    char ch;
+    printf("\nDo you want to try again (y/n) : ");
+    scanf(" %c", &ch); // Added space before %c to clear any leading whitespace
+    if (ch == 'n' || ch == 'N') {
+        screen();
+    } else {
+        switch(num) {
+            case 1:
+                binary_function();
+                break;
+            case 2:
+                decimal_function();
+                break;
+            case 3:
+                octal_function();
+                break;
+            case 4:
+                hexadecimal_function();
+                break;
+            default:
+                screen();
+        }
+    }
+}
+
+void screen() {
+    while(1) {
+        printf("\n1.Binary Conversion");
+        printf("\n2.Decimal Conversion");
+        printf("\n3.Octal Conversion");
+        printf("\n4.Hexadecimal Conversion");
+        printf("\n5.Exit the program\n\n");
+        int choice;
+        printf("Enter your Conversion Type : ");
+        scanf("%d", &choice);
+        switch(choice) {
+            case 1:
+                binary_function();
+                break;
+            case 2:
+                decimal_function();
+                break;
+            case 3:
+                octal_function();
+                break;
+            case 4:
+                hexadecimal_function();
+                break;
+            case 5:
+                thanks();
+                break;
+            default:
+                printf("\nInvalid number!!");
+                printf("Please select correct one\n\n");
+                break;
+        }
+    }
+}
+
+void binary_function() {
+    int bi;
+    while(1) {
+        printf("\n----------------------------------------\n");
+        printf("Enter the binary number : ");
+        scanf("%d", &bi);
+
+        if(bi % 10 != 0 && bi % 10 != 1) {
+            printf("\nInvalid number !");
+            printf("\nPlease enter in 0 or 1\n ");
+        } else {
+            show();
+            bi_to_dec(bi);
+            bi_to_oct(bi);
+            bi_to_hexa(bi);
+            tryagain(1);
+        }
+    }
+}
+
+void decimal_function() {
+    int de;
+    while(1) {
+        printf("\n----------------------------------------\n");
+        printf("Enter the Decimal number : ");
+        scanf("%d", &de);
+
+        if(de < 1) {
+            printf("\nInvalid number !");
+            printf("\nPlease enter number > 1\n ");
+        } else {
+            show();
+            dec_to_bi(de);
+            dec_to_oct(de);
+            dec_to_hexa(de);
+            tryagain(2);
+        }
+    }
+}
+
+void octal_function() {
+    int oc;
+    printf("\n----------------------------------------\n");
+    printf("Enter the Octal number : ");
+    scanf("%d", &oc);
+    show();
+    oct_to_dec(oc);
+    oct_to_bi(oc);
+    oct_to_hexa(oc);
+    tryagain(3);
+}
+
+void hexadecimal_function() {
+    char hex[10];
+    printf("\n----------------------------------------\n");
+    printf("Enter the Hexadecimal Number : ");
+    scanf("%s", hex);
+    show();
+    hexa_to_dec(hex);
+    hexa_to_oct(hex);
+    hexa_to_bi(hex);
+    tryagain(4);
+}
+
+void bi_to_dec(int num) {
+    int deci = 0, i = 0, rem;
+    while(num != 0) {
+        rem = num % 10;
+        num = num / 10;
+        deci += rem * pow(2, i++);
+    }
+    printf(">> In Decimal %d\n", deci);
+}
+
+void bi_to_oct(int num) {
+    int oct = 0, i = 0, rem = 0;
+    while(num != 0) {
+        rem = num % 10;
+        oct = oct + rem * pow(2, i);
+        i++;
+        num = num / 10;
+    }
+    printf(">> In Octal %o\n", oct);
+}
+
+void bi_to_hexa(int num) {
+    int hexa = 0, i = 0, rem = 0;
+    while(num != 0) {
+        rem = num % 10;
+        hexa = hexa + rem * pow(2, i);
+        i++;
+        num = num / 10;
+    }
+    printf(">> In Hexadecimal %lx\n\n", hexa);
+}
+
+void dec_to_bi(int num) {
+    int bi = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 2;
+        num = num / 2;
+        bi += rem * i;
+        i *= 10;
+    }
+    printf(">> In Binary %d\n", bi);
+}
+
+void dec_to_oct(int num) {
+    int oct = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 8;
+        num = num / 8;
+        oct += rem * i;
+        i *= 10;
+    }
+    printf(">> In Octal %d\n", oct);
+}
+
+void dec_to_hexa(int num) {
+    int hexa = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 16;
+        num = num / 16;
+        hexa += rem * i;
+        i *= 10;
+    }
+    printf(">> In Hexadecimal %lx\n", hexa);
+}
+
+void oct_to_dec(int num) {
+    int dec = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 10;
+        dec += rem * i;
+        i *= 8;
+        num /= 10;
+    }
+    printf(">> IN Decimal %d\n", dec);
+}
+
+void oct_to_bi(int num) {
+    int bi = 0, dec = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 10;
+        num /= 10;
+        dec += rem * i;
+        i *= 8;
+    }
+    i = 1;
+    while(dec != 0) {
+        rem = dec % 2;
+        dec /= 2;
+        bi += rem * i;
+        i *= 10;
+    }
+    printf(">> IN Binary %d\n", bi);
+}
+
+void oct_to_hexa(int num) {
+    int hexa = 0, dec = 0, i = 1, rem = 0;
+    while(num != 0) {
+        rem = num % 10;
+        num /= 10;
+        dec += rem * i;
+        i *= 8;
+    }
+    i = 1;
+    while(dec != 0) {
+        rem = dec % 16;
+        dec /= 16;
+        hexa += rem * i;
+        i *= 10;
+    }
+    printf(">>In Hexadecimal %lx\n", hexa);
+}
+
+void hexa_to_dec(char hexa[]) {
+    int decimal = 0;
+    int len = strlen(hexa);
+    for (int i = 0; hexa[i] != '\0'; i++) {
+        len--;
+        if (hexa[i] >= '0' && hexa[i] <= '9') {
+            decimal += (hexa[i] - '0') * pow(16, len);
+        } else if (hexa[i] >= 'A' && hexa[i] <= 'F') {
+            decimal += (hexa[i] - 'A' + 10) * pow(16, len);
+        } else if (hexa[i] >= 'a' && hexa[i] <= 'f') {
+            decimal += (hexa[i] - 'a' + 10) * pow(16, len);
+        } else {
+            printf("Invalid hexadecimal number!\n");
+            return; // Error: Invalid input
+        }
+    }
+    printf(">> In Decimal %d\n", decimal);
+}
+
+void hexa_to_oct(char hexa[]) {
+    int decimal = 0;
+    int len = strlen(hexa);
+    for (int i = 0; hexa[i] != '\0'; i++) {
+        len--;
+        if (hexa[i] >= '0' && hexa[i] <= '9') {
+            decimal += (hexa[i] - '0') * pow(16, len);
+        } else if (hexa[i] >= 'A' && hexa[i] <= 'F') {
+            decimal += (hexa[i] - 'A' + 10) * pow(16, len);
+        } else if (hexa[i] >= 'a' && hexa[i] <= 'f') {
+            decimal += (hexa[i] - 'a' + 10) * pow(16, len);
+        } else {
+            printf("Invalid hexadecimal number!\n");
+            return; // Error: Invalid input
+        }
+    }
+    printf(">> In Octal %o\n", decimal);
+}
+
+void hexa_to_bi(char hexa[]) {
+    printf(">> In Binary ");
+    for (int i = 0; hexa[i] != '\0'; ++i) {
+        char hexDigit = hexa[i];
+        switch (hexDigit) {
+            case '0':
+                printf("0000");
+                break;
+            case '1':
+                printf("0001");
+                break;
+            case '2':
+                printf("0010");
+                break;
+            case '3':
+                printf("0011");
+                break;
+            case '4':
+                printf("0100");
+                break;
+            case '5':
+                printf("0101");
+                break;
+            case '6':
+                printf("0110");
+                break;
+            case '7':
+                printf("0111");
+                break;
+            case '8':
+                printf("1000");
+                break;
+            case '9':
+                printf("1001");
+                break;
+            case 'A': case 'a':
+                printf("1010");
+                break;
+            case 'B': case 'b':
+                printf("1011");
+                break;
+            case 'C': case 'c':
+                printf("1100");
+                break;
+            case 'D': case 'd':
+                printf("1101");
+                break;
+            case 'E': case 'e':
+                printf("1110");
+                break;
+            case 'F': case 'f':
+                printf("1111");
+                break;
+            default:
+                printf("\nInvalid hexadecimal digit: %c", hexDigit);
+                return; // Exit the function
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    wellcome();
+    screen();
+    return 0;
+}
